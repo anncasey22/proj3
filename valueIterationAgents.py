@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -18,7 +18,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -60,8 +60,25 @@ class ValueIterationAgent(ValueEstimationAgent):
         self.runValueIteration()
 
     def runValueIteration(self):
-        # Write value iteration code here
-        "*** YOUR CODE HERE ***"
+        #Write value iteration code here
+        #takes mdp for the specified num of iterations b4 constructor returns\
+        #for loop, iterate through k states, and add to self.values
+        num_iteration = self.iterations
+        start = self.mdp.getStartState()
+        k = 0
+        for state in self.mdp.getStates():
+            best_action = ("hi", )
+            for action in self.mdp.getActions(state):
+                t = self.mdp.getTransitionStatesAndProbs(state, action)
+                state_prev = self.values[k - 1] if k>1 else state_prev = start
+                s_prime_sum = 0
+                for tup in t:
+                    r = self.mdp.getReward()
+                    s_prime_sum += tup[1]*(r + self.discount*state_prev)
+                self.values[k] = best_action[0]
+                best_action[0] = action, best_action[1] = s_prime_sum if best_action[1] < s_prime_sum else print("lalal")
+            self.values[k] = best_action[1]
+            k += 1
 
 
     def getValue(self, state):
@@ -76,7 +93,7 @@ class ValueIterationAgent(ValueEstimationAgent):
           Compute the Q-value of action in state from the
           value function stored in self.values.
         """
-        "*** YOUR CODE HERE ***"
+
         util.raiseNotDefined()
 
     def computeActionFromValues(self, state):
@@ -88,8 +105,12 @@ class ValueIterationAgent(ValueEstimationAgent):
           there are no legal actions, which is the case at the
           terminal state, you should return None.
         """
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        #find all the values of the legal actions
+        #return optimal action
+        values = self.values
+        action = self.getAction(state)
+
+
 
     def getPolicy(self, state):
         return self.computeActionFromValues(state)
